@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{245:function(e,o,t){"use strict";t.r(o),o.default={search:"搜索",language:"语言",google:"谷歌搜索",baidu:"百度搜索",bing:"必应搜索",stack_overflow:"Stack Overflow",github:"Github",gitee:"码云搜索"}}}]);

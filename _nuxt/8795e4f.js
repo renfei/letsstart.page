@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{244:function(e,o,n){"use strict";n.r(o),o.default={search:"Search",language:"Language",google:"Google",baidu:"Baidu",bing:"Bing",stack_overflow:"Stack Overflow",github:"Github",gitee:"Gitee"}}}]);
