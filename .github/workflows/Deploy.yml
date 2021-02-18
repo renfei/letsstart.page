@@ -33,3 +33,13 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+      - name: Deploy-OSS
+        uses: manyuanrong/setup-ossutil@master
+        with:
+          endpoint: oss-cn-hangzhou.aliyuncs.com
+          access-key-id: ${{ secrets.OSS_KEY_ID }}
+          access-key-secret: ${{ secrets.OSS_KEY_SECRET }}
+      - name: Deploy-OSS-Clean
+        run: ossutil rm oss://letsstart/ -rf
+      - name: Deploy-OSS-Copy
+        run: ossutil cp -rf ./dist oss://letsstart/
