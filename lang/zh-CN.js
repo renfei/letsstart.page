@@ -28,5 +28,7 @@ export default {
   twitter_developer: "推特开发者",
   community_news: "社区&新闻",
   stackexchange: "StackExchange",
+  cnblogs:"博客园",
+  csdn:"CSDN",
   msdn: "MSDN",
 }
