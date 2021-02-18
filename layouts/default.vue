@@ -4,7 +4,7 @@
       app
     >
       <v-avatar
-        color='grey darken-1'
+        tile
         size="32"
       >
         <img
@@ -141,3 +141,11 @@
     },
   }
 </script>
+<style>
+  .theme--light.v-text-field--solo-inverted.v-input--is-focused > .v-input__control > .v-input__slot {
+    background: rgba(0, 0, 0, 0.06);
+  }
+  .theme--light.v-text-field--solo-inverted.v-input--is-focused > .v-input__control > .v-input__slot input {
+    color: rgba(0, 0, 0, 0.87);
+  }
+</style>
