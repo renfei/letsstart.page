@@ -26,7 +26,7 @@
             rounded="lg"
             min-height="268"
           >
-            <!--  -->
+            <Sidebar/>
           </v-sheet>
         </v-col>
       </v-row>
@@ -36,9 +36,12 @@
 
 <script>
   import Navigation from '../components/Navigation'
+  import Sidebar from '../components/Sidebar'
+
   export default {
     components: {
-      Navigation
+      Navigation,
+      Sidebar
     }
   }
 </script>

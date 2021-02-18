@@ -1,4 +1,7 @@
 export default {
+  news:'News Information',
+  industry_news:'Industry news',
+  no_news_source:'No news source, welcome to cooperate.',
   search: 'Search',
   language: 'Language',
   google: 'Google',
