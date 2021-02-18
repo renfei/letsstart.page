@@ -1,117 +1,143 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+  <v-app>
     <v-app-bar
-      :clipped-left="clipped"
-      fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-avatar
+        color='grey darken-1'
+        size="32"
+      >
+        <img
+          src="../static/letsstart.page.png"
+          alt="John"
+        >
+      </v-avatar>
+      <v-toolbar-title class="ml-1">Let's Start.Page</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-text-field
+        centered
+        dense
+        flat
+        hide-details
+        rounded
+        solo-inverted
+        v-model="searchText"
+        :label="this.$t('search')"
+      >
+        <template v-slot:append>
+          <v-fade-transition leave-absolute>
+            <v-menu
+              offset-y
+              bottom
+              left
+              open-on-hover
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-text>
+                  <v-container>
+                    <v-btn depressed class="mr-1 mb-1" @click="search('google')">{{$t('google')}}</v-btn>
+                    <v-btn depressed class="mr-1 mb-1" @click="search('baidu')">{{$t('baidu')}}</v-btn>
+                    <v-btn depressed class="mr-1 mb-1" @click="search('bing')">{{$t('bing')}}</v-btn>
+                    <v-btn depressed class="mr-1 mb-1" @click="search('stack_overflow')">{{$t('stack_overflow')}}</v-btn>
+                    <v-btn depressed class="mr-1 mb-1" @click="search('github')">{{$t('github')}}</v-btn>
+                    <v-btn depressed class="mr-1 mb-1" @click="search('gitee')">{{$t('gitee')}}</v-btn>
+                  </v-container>
+                </v-card-text>
+              </v-card>
+            </v-menu>
+          </v-fade-transition>
+        </template>
+      </v-text-field>
+      <v-spacer></v-spacer>
       <v-btn
         icon
-        @click.stop="miniVariant = !miniVariant"
+        href="https://github.com/renfei/letsstart.page"
+        target="_blank"
+        rel="nofollow"
       >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        <v-icon>mdi-github</v-icon>
       </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
+      <v-menu
+        offset-y
+        open-on-hover
       >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-translate</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="locale in availableLocales"
+            :key="locale.code"
+          >
+            <v-list-item-title>
+              <nuxt-link
+                :to="switchLocalePath(locale.code)"
+                style="color: #000000;text-decoration: none;display: block;">
+                {{ locale.name }}
+              </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
-    <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
-    </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer
-      :absolute="!fixed"
-      app
-    >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+
+    <nuxt/>
   </v-app>
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+  export default {
+    data: () => ({
+      searchText: ''
+    }),
+    methods: {
+      search(type) {
+        switch (type) {
+          case 'baidu':
+            window.open("https://www.baidu.com/s?wd=" + this.searchText);
+            break;
+          case 'bing':
+            window.open("https://www.bing.com/search?q=" + this.searchText);
+            break;
+          case 'stack_overflow':
+            window.open("https://stackoverflow.com/search?q=" + this.searchText);
+            break;
+          case 'github':
+            window.open("https://github.com/search?q=" + this.searchText);
+            break;
+          case 'gitee':
+            window.open("https://search.gitee.com/?q=ddd" + this.searchText);
+            break;
+          case 'google':
+          default:
+            window.open("https://www.google.com/search?q=" + this.searchText);
+            break;
         }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
+        this.searchText = '';
+      },
+    },
+    computed: {
+      availableLocales() {
+        return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)
+      },
+    },
+    mounted() {
+
+    },
   }
-}
 </script>
